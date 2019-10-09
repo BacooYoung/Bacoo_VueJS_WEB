@@ -1,0 +1,635 @@
+<template>
+
+   <div class="header">
+
+       
+        <Login v-if="login" />   
+        <Signup v-if="signup" />   
+
+        <div class="containers">
+
+            <div class = "header-type-1" v-if="search == false">
+
+                <div class="header-top">
+
+                    <div class="header-top-logo">
+                        <router-link :to="'/'" ><span>FORME</span></router-link>
+                    </div>
+
+                    <div class="header-top-menu">
+                        <router-link :to="'/mypage'" v-if="login_check"><span>마이페이지</span></router-link>
+                        <span v-on:click="login_click" v-if="login_check == false">로그인</span>
+                        <span v-on:click="logout" v-else>로그아웃</span>
+                         <router-link :to="'/talent/request'" v-if="login_check"><span>재능요청</span></router-link>
+                    </div>
+
+                </div>
+
+                <div class="header-content">
+                    
+                    <div class = "header-content-text1">
+                        <span>당신이 원하는 재능을 검색해보세요!</span>
+                    </div>
+
+                    <div class = "header-content-text2">
+                        <span>누구나 쉽게 재능을 교환할수있습니다!</span>
+                    </div>
+
+                    <div id = "header-content-search"  class="input-group input-group-lg">
+                    <div class="header-content-search-img">
+                        <img src='https://i.imgur.com/Ulpp2Bb.png' />
+                    </div>
+                    <input id="search_bar" v-model="search_value"  type="search" placeholder="" class="form-control" v-on:keyup.enter="search_click" />
+                
+                    </div>
+
+                </div>
+
+            </div>
+            
+                <div class="header-type-2" v-if="search == true">
+                        <div class="header-top-logo">
+                             <router-link :to="'/'" ><span>FORME</span></router-link>
+                        </div>
+                        <div class="header-content2">
+                            <div class="header-content-search-img2">
+                                <img src='https://i.imgur.com/Ulpp2Bb.png' />
+                            </div>
+                            <input id="search_bar2" v-model="search_value"  type="search" placeholder="" class="form-control" v-on:keyup.enter="search_click" />
+                        </div>
+
+                        <div class="header-top-menu-right">
+                            <router-link :to="'/mypage'" v-if="login_check"><span>마이페이지</span></router-link>
+                            <span v-on:click="login_click" v-if="login_check == false">로그인</span>
+                            <span v-on:click="logout" v-else>로그아웃</span>
+                         <router-link :to="'/talent/request'" v-if="login_check"><span>재능요청</span></router-link>
+                    </div>
+
+                </div>
+
+        </div> 
+      </div>
+
+</template>
+
+<script>
+
+    export default {
+        data() {
+            return {
+                search_value : "",
+                search : false,
+                url : "", 
+                login : false,
+                signup : false,
+                login_check : false
+            }
+        },
+        watch : {
+
+        },
+        created() {
+
+            if(localStorage.getItem('user_id')) {
+                this.login_check = true;
+             } else {
+                 this.login_check = false;
+             }
+
+
+
+            if(this.$route.path == "/") {
+                this.search = false;
+
+            } else {
+                this.search = true;
+                if (this.$route.path == "/search") {
+                    this.search_value = this.$route.query.tag;
+                }
+            }
+
+
+
+            $(window).bind("pageshow", (event) => {
+                if(event.originalEvent.persisted) {
+                    this.header_check();
+                } 
+            });
+            
+            this.$EventBus.$on('header_check',this.header_check );
+
+            this.$EventBus.$on('signup_exit',this.signup_exit );
+            this.$EventBus.$on('signup_open',this.signup_open );
+            this.$EventBus.$on('login_exit',this.login_exit );
+        },
+
+        updated() {
+
+        },
+
+        mounted() {
+
+            if(this.search == true) {
+
+                $(".header").css({height : "50px"});
+                $(".containers").css({height : "50px"});
+            }
+        },
+
+        methods : {
+            logout() {
+                sessionStorage.removeItem("user_id");
+                window.location.reload();
+            },
+
+            login_click() {
+                this.login = true;
+            },
+
+            login_exit () {
+               this.login = false; 
+            },
+
+            signup_open() {
+                this.login = false;
+                this.signup = true;
+            },
+
+            signup_exit() {
+               this.signup = false; 
+            },
+
+
+            header_check() {
+                //var agent = navigator.userAgent.toLowerCase();
+                //if (agent.indexOf("chrome") != -1) 
+
+                
+                if(this.$route.path == "/") {
+                    this.search = false;
+
+                }  else {
+                     this.search = true;
+                }
+
+                if(this.search) {
+                    $(".header").animate({height : "50px"},300);
+                    $(".containers").animate({height : "50px"},300);
+
+                    
+
+                    
+                  } else {
+
+                    $(".header").animate({height : "250px"},300);
+                    $(".containers").animate({height : "250px"},300);
+                    
+                    
+                }
+            },
+
+            search_click() {
+
+                if(this.search_value == "") {
+                    this.search = false;
+
+                } else {
+                    this.search = true;
+                }
+
+
+                if(this.search) {
+                    this.url = "/search";
+                    this.$router.push({ path: '/search', query: { tag: this.search_value }})
+                    this.$EventBus.$emit('searchs',this.search_value );
+                } else {
+
+                    
+                    this.$router.push('/');
+                }
+
+                
+            }
+        }
+
+    }
+</script>
+
+<style scoped>
+
+
+</style>
+
+<style>
+
+
+.header {
+    width : 100%;
+    height: 250px;
+    background-color: #1c7ed6;
+
+
+    font-family: "Noto Sans KR","Apple Gothic","돋움",Dotum,"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+
+.containers{
+   background-color: #1c7ed6;
+ 
+   margin: 0 auto;
+   width : 1024px;
+}
+
+.header-top {
+    width : 100%;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.header-top-logo {
+    float : left;
+    width : 100px;
+    line-height: 50px;
+    color: white;
+    margin-left: 2%;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+.header-top-logo span {
+    
+    font-weight: 400;
+    font-size: 1.1em;
+    color: white;
+}
+
+.header-top-menu {
+    float : right;
+    line-height: 50px;
+    margin-right: 2%;
+    width : 600px;
+    color: white;
+}
+
+.header-top-menu span  {
+    font-weight: 400;
+    font-size: 1.1em;
+    float : right;
+    color: white;
+    margin-right : 15px;
+    cursor: pointer;
+}
+
+.header-top-menu-right {
+    float : right;
+    line-height: 50px;
+    color: white;
+}
+
+.header-top-menu-right span  {
+    font-weight: 400;
+    font-size: 1.1em;
+    float : right;
+    color: white;
+    margin-right : 15px;
+    cursor: pointer;
+}
+
+
+
+.header-content {
+    height: 190px;
+    margin: 0 auto;
+    background-color :
+}
+
+.header-content2  {
+    width: 650px;
+    float: left;
+    
+    height: 30px;
+}
+
+.header-content-text1 {
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    font-weight: 400;
+}
+
+.header-content-text2 {
+    height: 50px;<template>
+
+   <nav id="mainNav"  style="width : 100%;  text-align: center; background-color: rgba( 255, 255, 255, 0.5 );" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+
+       <div class="header-top">
+
+            <div class="header-top-logo">
+                <img width="100" height="30" src="../assets/img/logos.png"/>
+            </div>
+            <div id = "header-content-search"  class="input-group input-group-lg" >
+                <div class="header-content-search-img">
+                    <img src='https://i.imgur.com/Ulpp2Bb.png' />
+                </div>
+                <input id="search_bar" v-model="search_value"  type="search" placeholder="원하시는 재능을 검색해보세요!" class="form-control" v-on:keyup.enter="search_click" />
+            </div>
+            <div class="header-top-menu">
+                <router-link :to="'/mypage'" v-if="login_check"><span>마이페이지</span></router-link>
+                <span v-on:click="login_click" v-if="login_check == false">로그인</span>
+                <span v-on:click="logout" v-else>로그아웃</span>
+                <router-link :to="'/talent/request'" v-if="login_check"><span>재능요청</span></router-link>
+            </div>
+
+        </div>
+       
+      </div>
+    </nav>
+</template>
+
+<script>
+
+    export default {
+        data() {
+            return {
+                search_value : "",
+                search : false,
+                url : "", 
+                login_check : false
+            }
+        },
+        watch : {
+
+        },
+        created() {
+            window.scrollTo(0, 0);
+
+            this.check_login();
+                        
+            if(this.$route.path == "/") {
+                this.search = false;
+
+            } else {
+                this.search = true;
+                if (this.$route.path == "/search") {
+                    this.search_value = this.$route.query.tag;
+                }
+            }
+
+            this.$EventBus.$on('header_check',this.header_check );
+            this.$EventBus.$on('login_check',this.check_login );
+         },
+
+        updated() {
+
+        },
+
+        mounted() {
+             if(this.search == true) {
+
+                $(".header").css({height : "100px"});
+            }
+        },
+
+        methods : {
+            
+            logout() {
+                sessionStorage.removeItem("user_id");
+                window.location.reload();
+            },
+
+            check_login() {
+                if(sessionStorage.getItem('user_id')) {
+                this.login_check = true;
+             } else {
+                 this.login_check = false;
+             }
+            },
+
+           header_check() {
+                //var agent = navigator.userAgent.toLowerCase();
+                //if (agent.indexOf("chrome") != -1) 
+                
+                if(this.$route.path == "/") {
+                    this.search = false;
+
+                }  else {
+                     this.search = true;
+                }
+
+                if(this.search) {
+                    $(".header").animate({height : "100px"},300);
+
+                    
+
+                    
+                  } else {
+
+                    $(".header").animate({height : "150px"},300);
+                    
+                    
+                }
+            },
+
+
+            search_click() {
+
+                if(this.search_value == "") {
+                    this.search = false;
+
+                } else {
+                    this.search = true;
+                }
+
+
+                if(this.search) {
+                    this.url = "/search";
+                    this.$router.push({ path: '/search', query: { tag: this.search_value }})
+                    this.$EventBus.$emit('searchs',this.search_value );
+                } else {
+
+                    
+                    this.$router.push('/');
+                }
+
+                
+            }
+                
+        }
+
+    }
+</script>
+
+<style scoped>
+
+
+</style>
+
+<style>
+
+
+.header {
+    width : 100%;
+    height: 150px;
+    background-color: #1c7ed6;
+
+    font-family: "Noto Sans KR","Apple Gothic","돋움",Dotum,"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+
+.header-top {
+    width : 100%;
+    height: 40px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top : 1%;
+}
+
+.header-top-meun-left {
+    width : 33%;
+    float: left;
+    height: 40px;
+}
+
+.header-top-logo {
+    width : 33%;
+    height: 40px;
+    float: left;
+    text-align : center;
+}
+
+.header-top-logo span { 
+    color : #ffffff;
+}
+
+
+.header-top-meun-right {
+    width : 33%;
+    height: 40px;
+    float: left;
+    text-align : right;
+}
+
+.header-content {
+    width : 100%;
+    height: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.header-content-title{
+    width : 100%;
+    text-align : center;
+}
+
+.header-content-title{
+    color : #ffffff;
+    font-size : 16px;
+}
+
+
+#header-content-search {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.header-content-search-img-div{
+    width : 30px;
+    height: 30px;
+    float : right;
+    border-left : 1px solid #707070;
+}
+
+.header-content-search-img {
+    line-height: 25px;
+    width : 100%;
+    text-align : right;
+    padding-right : 5px;
+    height: 22px;
+    z-index: 2;
+    position: absolute;
+}
+
+
+#header-content-search img{
+    
+    width : 22px;
+    height: 22px;
+}
+
+#search_bar {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    border-radius: 0px;
+    padding-left: 60px;
+    z-index: 1;
+}
+
+</style>
+
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    font-weight: 400;
+}
+
+#search_bar {
+    position: absolute;
+    width: 99%;
+    height: 40px;
+    border-radius: 30px;
+    padding-left: 60px;
+    z-index: 1;
+}
+
+#search_bar2 {
+    
+    position: absolute;
+    width: 650px;
+    height: 30px;
+    line-height : 30px;
+    z-index: 1;
+    margin-top : 10px;
+}
+
+#header-content-search {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 800px;
+}
+
+.header-content-search-img {
+    line-height: 38px;
+    margin-left: 15px;
+    width : 22px;
+    height: 22px;
+    z-index: 2;
+    position: absolute;
+}
+
+.header-content-search-img2 {
+    line-height: 38px;
+    width : 15px;
+    height: 15px;
+    z-index: 2;
+    margin-top : 3px;
+    margin-left: 620px;
+    position: absolute;
+}
+
+.header-content-search-img2 img{
+    
+    width : 20px;
+    height: 20px;
+}
+
+#header-content-search img{
+    
+    width : 22px;
+    height: 22px;
+}
+
+
+</style>

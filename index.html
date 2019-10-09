@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114452150-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-114452150-1');
+    </script>
+
+    <script src="<%= htmlWebpackPlugin.files.publicPath %>static/js/font.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>재능 바꾸 - 재능교환 / 교환과외 재능의 모든것! 재능바꾸!</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-16x16.png">
+    <!--[if IE]><link rel="shortcut icon" href="/static/img/icons/favicon.ico"><![endif]-->
+    <!-- Add to home screen for Android and modern mobile browsers -->
+    <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
+    <meta name="theme-color" content="#4DBA87">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.publicPath %>static/css/bootstrap.min.css" >
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.publicPath %>static/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="<%= htmlWebpackPlugin.files.publicPath %>static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.publicPath %>static/css/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.publicPath %>static/css/slick-theme.css"/>
+
+    <meta name="naver-site-verification" content="dde24175d71a7219b430d6be4d32746c8bdc7ef8"/>
+
+    <meta name="description" content="원하는 재능을 한 번에 만나보세요! 원하는 재능을 모두 교환할 수 있는 공간, 바꾸 는 여러분의 재능을 환영합니다.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="재능 바꾸 - 재능교환 / 교환과외 재능의 모든것! 재능바꾸!">
+    <meta property="og:description" content="원하는 재능을 한 번에 만나보세요! 원하는 재능을 모두 교환할 수 있는 공간, 바꾸 는 여러분의 재능을 환영합니다.">
+    <meta property="og:image" content="https://i.imgur.com/1hla0gh.png">
+    <meta property="og:url" content="https://www.dabacoo.com/">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="my-project">
+    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png">
+    <link rel="mask-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png" color="#4DBA87">
+    <!-- Add to home screen for Windows -->
+    <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    <% for (var chunk of webpack.chunks) {
+        for (var file of chunk.files) {
+          if (file.match(/\.(js|css)$/)) { %>
+    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+  </head>
+  <body onload="initchatbot()" style="overflow-x:hidden; overflow-y:auto; font-family: 'Noto Sans KR','Apple Gothic','돋움',Dotum,'Helvetica Neue',Helvetica,Arial,sans-serif !important;">
+ 
+    <noscript>
+      This is your fallback content in case JavaScript fails to load.
+    </noscript>
+    <div id="app"></div>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="<%= htmlWebpackPlugin.files.publicPath %>static/js/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="<%= htmlWebpackPlugin.files.publicPath %>static/js/slick.min.js"></script>
+    <script>
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+      registration.unregister()
+    } })
+    </script>
+    
+    <!-- Todo: only include in production -->
+    <!-- built files will be auto injected -->
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<template>
+
+    <div class="my_request_info">
+
+        <MyRequestList_m v-if="check" v-for="(results,index) in result" :key ="index" v-bind:result="results"/>
+
+
+    </div>
+
+    
+</template>
+
+<script>
+
+  import {Server_IP} from '../../../server/serverIP'
+  export default {
+      
+
+        data() {
+            return {
+                list_click : false,
+                result : [],
+                check : false
+            }
+        },
+        created() {
+            //Scrolls to top when view is displayed
+            window.scrollTo(0, 0);
+            
+            var userId =  localStorage.getItem('user_id');
+          
+            this.$http.get(`${Server_IP}/request/talent/my/${userId}`,{
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }})
+                .then(response => {
+                    return response.json();
+                }).then(data => {
+                    if(data.status == 0) {
+                        this.result = data.result;
+                        this.check = true
+                    } else {
+                        this.result = [];
+                        this.check = false;
+                    }
+                }, error => {
+                    console.log(error);
+                });
+
+           
+        },
+        watch : {
+
+        },
+        mounted() {
+           },
+
+        beforeDestroy() {
+        
+        },
+        methods: {
+            list_open() {
+                this.list_click = !this.list_click;
+            }
+        }
+    }
+</script>
+
+<style>
+
+.my_request_info {
+    margin-top: 20px;
+    width: 100%;
+    float: left;
+   
+}
+
+</style>

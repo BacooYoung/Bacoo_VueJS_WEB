@@ -1,0 +1,20 @@
+{
+  "name": "Bacoo",
+  "short_name": "Bacoo",
+  "icons": [
+    {
+      "src": "/static/img/icons/144.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#4DBA87"
+}
