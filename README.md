@@ -7,7 +7,7 @@
 ------- 
 ## 메인화면
 <div style="margin-bottom : 50px; height : 500px;">
-<img width="700" style="margin-bottom : 50px;"  src ="https://user-images.githubusercontent.com/34528139/67675679-181cf280-f9c3-11e9-9261-716d3e4e70c3.PNG">
+<img width="800" style="margin-bottom : 50px;"  src ="https://user-images.githubusercontent.com/34528139/67675679-181cf280-f9c3-11e9-9261-716d3e4e70c3.PNG">
 
 </div>
 
@@ -15,6 +15,6 @@
 ### 실시간 화상 수업 화면
 <div>
 
-<img width="700" src ="https://user-images.githubusercontent.com/34528139/67675680-181cf280-f9c3-11e9-9f4b-22a020870254.PNG">
+<img width="800" src ="https://user-images.githubusercontent.com/34528139/67675680-181cf280-f9c3-11e9-9f4b-22a020870254.PNG">
 </div>
   
