@@ -5,8 +5,12 @@
 ### 사용 스택 : vue.js , socket.io, webrtc
 
 
+<div style="margin-right : 20px; border: 1px solid #ededed;">
+<img width="350"  src ="https://user-images.githubusercontent.com/34528139/67675679-181cf280-f9c3-11e9-9261-716d3e4e70c3.PNG">
+
+</div>
 <div>
-<img width="350" style="margin-right : 20px; border : 1px solid #000000;" src ="https://user-images.githubusercontent.com/34528139/67675679-181cf280-f9c3-11e9-9261-716d3e4e70c3.PNG">
+
 <img width="350" src ="https://user-images.githubusercontent.com/34528139/67675680-181cf280-f9c3-11e9-9f4b-22a020870254.PNG">
 </div>
   
