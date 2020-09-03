@@ -69,7 +69,7 @@
     "vue-spinner": "^1.0.3",
     "mobile-detect": "^1.4.1",
     "vuejs-uib-pagination": "1.0.6",
-    "puppeteer": "1.10.0"
+    "puppeteer": "1.13.0"
   },
   "engines": {
     "node": ">= 4.0.0",
